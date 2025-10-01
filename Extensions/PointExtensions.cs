@@ -58,6 +58,21 @@ namespace Autoplanning.Tools.Extensions
             return areaIntUnits / (SCALE * SCALE); // back to mm²
         }
 
+        public static Paths64 Overlap(this Paths64 shape1, Paths64 shape2, bool cleanShapes = false)
+        {
+            if (cleanShapes)
+            {
+                // tidy tiny spikes/self-intersections
+                double epsilon = 0.5 * SCALE; // 0.5 mm
+                shape1 = Clipper.SimplifyPaths(shape1, epsilon);
+                shape2 = Clipper.SimplifyPaths(shape2, epsilon);
+            }
+
+            // Intersection with EvenOdd handles holes naturally
+            Paths64 solution = Clipper.Intersect(shape1, shape2, FillRule.EvenOdd);
+            return solution;
+        }
+
         public static List<Point> ToPoints(this Paths64 paths)
         {
             var pts = new List<Point>();
