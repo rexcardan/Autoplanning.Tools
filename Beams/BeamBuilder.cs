@@ -14,6 +14,14 @@ namespace Autoplanning.Tools.Beams
         {
             Plan = ps;
             BeamParams = mp;
+            NextGeometry = new BeamGeometry()
+            {
+                CollimatorAngle = 0.0,
+                CouchAngle = 0.0,
+                GantryAngle = 0.0,
+                Jaws = new VRect<double>(-5.0, -5.0, 5.0, 5.0), // X1, Y1, X2, Y2
+                Isocenter = new VVector(0.0, 0.0, 0.0)
+            };
         }
 
         public ExternalPlanSetup Plan { get; set; }
