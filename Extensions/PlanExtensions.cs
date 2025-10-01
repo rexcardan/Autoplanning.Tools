@@ -1,4 +1,5 @@
-﻿using VMS.TPS.Common.Model.API;
+﻿using System.Numerics;
+using VMS.TPS.Common.Model.API;
 
 namespace Autoplanning.Tools.Extensions
 {
@@ -18,6 +19,12 @@ namespace Autoplanning.Tools.Extensions
                 edit.WeightFactor = w;
                 b.ApplyParameters(edit);
             }
+        }
+
+        public static void RemoveAllBeams(this ExternalPlanSetup ps)
+        {
+            var beams = ps.Beams.ToList();
+            beams.ForEach(b => ps.RemoveBeam(b));
         }
     }
 }
